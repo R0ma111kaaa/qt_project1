@@ -1,5 +1,4 @@
-('C:\\Users\\User\\Desktop\\codding\\python\\yandex\\qt '
- 'project1\\build\\main\\PYZ-00.pyz',
+('C:\\Users\\User\\Desktop\\qt project1\\build\\main\\PYZ-00.pyz',
  [('PyQt5',
    'C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PyQt5\\__init__.py',
    'PYMODULE'),
