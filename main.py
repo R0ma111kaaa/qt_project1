@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 import os.path
 import sqlite3
 
-from PyQt5.QtCore import QDate, QTimer
+from PyQt5.QtCore import QDate, QTimer, Qt
 from PyQt5.QtGui import QFontDatabase, QFont, QTextCharFormat, QColor
 from PyQt5.QtWidgets import QMainWindow, QCalendarWidget, QWidget, QTextEdit, QColorDialog, QLabel, QComboBox, \
     QTableWidget, QTableWidgetItem, QAbstractItemView, QTabWidget, QLayout, QMessageBox
@@ -24,11 +24,18 @@ def getWeather():
         cords = geocoder.ip('me')
     except RuntimeError:
         return None, None
+    except Exception:
+        return None, None
     lat, lon = cords.latlng
     city = cords.city
-    curr_weather = requests.get(
-        "https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&appid={}".format(lat, lon, api)
-    )
+    try:
+        curr_weather = requests.get(
+            "https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&appid={}".format(lat, lon, api)
+        )
+    except RuntimeError:
+        return None, None
+    except Exception:
+        return None, None
     if curr_weather.status_code == 200:
         return curr_weather.json(), city
     else:
@@ -565,6 +572,7 @@ def except_hook(cls, exception, traceback):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    app.setAttribute(Qt.AA_EnableHighDpiScaling)
     sc = SmartCalendar()
     sc.show()
 
